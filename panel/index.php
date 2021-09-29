@@ -1,3 +1,10 @@
+<?php
+session_start();
+if ($_SESSION['authorized'] == 0) {
+  header("Location: /admin");
+  exit;
+}
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -19,7 +26,7 @@
   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" href="#">Выход</a>
+      <a class="nav-link px-3" href="/login.php?logout=1">Выход</a>
     </div>
   </div>
 </header>

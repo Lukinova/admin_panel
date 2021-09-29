@@ -1,16 +1,4 @@
 <?php
-/*$login = "admin";
-$password = "admin";
-
-echo '<pre>' . print_r([$_POST['password'], hash('sha256', $_POST['password'])], true);
-
-
-if ($login === $_POST['login'] && $password === $_POST['password']) {
-	header("Location: panel/");
-}else{
-	header("Location: /admin/");
-}
-*/
 
 class DB
 {
@@ -65,6 +53,7 @@ class User
 		DB::query($q);
 	}
 
+
 	public function cheсkup () {
 		$f_login = $_POST['login'];
 		$f_password = hash('sha256', $_POST['password']);
@@ -72,12 +61,24 @@ class User
 		$result = DB::query('select * from users where login = "'.$f_login.'" and password = "'.$f_password.'" limit 0,1;')[0];
 
 		if ($result){
+			session_start();
+			$_SESSION['authorized'] = 1;
 			header("Location: /panel");
 		} else { 
 			header("Location: /admin");
 		}
 
 	} 
+
+	
+}
+
+
+if ($_REQUEST['logout'] == 1) {
+	session_start();
+	unset($_SESSION['authorized']);
+	header("Location: /admin");
+	exit;
 }
 
 
